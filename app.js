@@ -10,14 +10,34 @@ var budgetController = (function () {
   }
 })()
 
-var uiController = (function () {})()
-
-var controller = (function (budgetCtrl, uiCtrl) {
-  var z = budgetCtrl.test(5)
-
+var uiController = (function () {
   return {
-    anotherTest: function () {
-      console.log(z)
+    getInput: function () {
+      return {
+        type: document.querySelector('.add__type').value,
+        description: document.querySelector('.add__description').value,
+        value: document.querySelector('.add__value').value
+      }
     }
   }
+})()
+
+var controller = (function (budgetCtrl, uiCtrl) {
+  var ctrlAddItem = function () {
+    // input data
+    var input = uiCtrl.getInput()
+    console.log(input)
+    // item added to budgetController
+    // item added to ui
+    // final calculations
+    // show the budget
+  }
+
+  document.querySelector('.add__btn').addEventListener('click', ctrlAddItem)
+
+  document.addEventListener('keypress', function (event) {
+    if (event.keyCode === 13) {
+      ctrlAddItem()
+    }
+  })
 })(budgetController, uiController)
