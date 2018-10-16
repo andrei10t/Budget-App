@@ -84,6 +84,19 @@ var uiController = (function () {
 
       document.querySelector(element).insertAdjacentHTML('beforeend', newHtml)
     },
+    clearField: function () {
+      var fields, fieldsArr
+      // qSA returns a list
+      fields = document.querySelectorAll(
+        DOMstrings.descriptionS + ', ' + DOMstrings.valueS
+      )
+      // we trick it
+      fieldsArr = Array.prototype.slice.call(fields)
+      fieldsArr.forEach(function (current, index, arr) {
+        current.value = ''
+      })
+    },
+
     getDOMstrings: function () {
       return DOMstrings
     }
@@ -111,6 +124,8 @@ var controller = (function (budgetCtrl, uiCtrl) {
     newItem = budgetCtrl.addItem(input.type, input.description, input.value)
     // item added to ui
     uiCtrl.addListItem(newItem, input.type)
+    // clear fields
+    uiCtrl.clearField()
     // final calculations
     // show the budget
   }
