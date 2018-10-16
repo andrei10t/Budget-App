@@ -45,11 +45,14 @@ var budgetController = (function () {
 })()
 
 var uiController = (function () {
+  // in case I need to change something quick
   var DOMstrings = {
     typeS: '.add__type',
     descriptionS: '.add__description',
     valueS: '.add__value',
-    addBtnS: '.add__btn'
+    addBtnS: '.add__btn',
+    incomeContain: '.income__list',
+    expenseContain: '.expenses__list'
   }
 
   return {
@@ -61,6 +64,26 @@ var uiController = (function () {
       }
     },
 
+    addListItem: function (obj, type) {
+      var html, newHtml, element
+      // create html string with placeholder
+
+      if (type === 'income') {
+        element = DOMstrings.incomeContain
+        html =
+          '<div class="item clearfix" id="income-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">+ %value%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline" /></button></div></div></div>'
+      } else {
+        element = DOMstrings.expenseContain
+        html =
+          '<div class="item clearfix" id="expense-%id%"><div class="item__description">%description%</div><div class="right clearfix"><div class="item__value">- %value%</div><div class="item__percentage">21%</div><div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div></div>'
+      }
+      // replace text
+      newHtml = html.replace('%id%', obj.id)
+      newHtml = newHtml.replace('%description%', obj.description)
+      newHtml = newHtml.replace('%value%', obj.value)
+
+      document.querySelector(element).insertAdjacentHTML('beforeend', newHtml)
+    },
     getDOMstrings: function () {
       return DOMstrings
     }
@@ -87,6 +110,7 @@ var controller = (function (budgetCtrl, uiCtrl) {
     // item added to budgetController
     newItem = budgetCtrl.addItem(input.type, input.description, input.value)
     // item added to ui
+    uiCtrl.addListItem(newItem, input.type)
     // final calculations
     // show the budget
   }
