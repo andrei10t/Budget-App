@@ -95,6 +95,8 @@ var uiController = (function () {
       fieldsArr.forEach(function (current, index, arr) {
         current.value = ''
       })
+      // set focus back on description field
+      fieldsArr[0].focus()
     },
 
     getDOMstrings: function () {
